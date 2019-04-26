@@ -4,6 +4,7 @@ module.exports = {
   registerUser
 };
 
-function registerUser({ username, password }) {
-  return db("users").insert({ username, password });
+async function registerUser({ username, password }) {
+  await db("users").insert({ username, password });
+  return db("users").where({ username }).first();
 }
