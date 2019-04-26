@@ -11,8 +11,9 @@ describe("Database Helpers", () => {
     it('adds user to users table', async () => {
       const testUser = {username: "test", password: "test"};
       const success = await users.registerUser(testUser);
-      expect(success).toEqual({username: "test", password:"test", id: 1})
-      
+      expect(success).toEqual({...testUser, id: 1})
     })
+
+    
   })
 })
