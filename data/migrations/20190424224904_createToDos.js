@@ -1,5 +1,5 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable("todo", tbl => {
+  return knex.schema.createTable("todos", tbl => {
     tbl.increments();
     tbl
       .integer("party_id")
@@ -14,5 +14,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists("todo");
+  return knex.schema.dropTableIfExists("todos");
 };

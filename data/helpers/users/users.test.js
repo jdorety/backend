@@ -1,14 +1,12 @@
 const users = require("./users.js");
 const db = require("../../dbConfig.js");
 
-afterAll(() => {
-  return db('users').truncate();
-})
+beforeEach(async () => {
+  return await db("users").truncate();
+});
+
 
 describe("Database Helpers", () => {
-  beforeEach(() => {
-    return db("users").truncate();
-  });
 
   describe("users table helpers", () => {
     it("adds user to users table", async () => {
@@ -23,5 +21,11 @@ describe("Database Helpers", () => {
       const gotUser = await users.getUser({ id: 1 });
       expect(gotUser).toEqual(user);
     });
+    
   });
 });
+
+afterAll(async () => {
+  return await db('users').truncate();
+})
+
