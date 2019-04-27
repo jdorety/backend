@@ -1,19 +1,24 @@
 const db = require("../../dbConfig.js");
 
 module.exports = {
-  addParty,
-  getParty,
-  editParty
+  add,
+  get,
+  edit,
+  remove
 };
 
-function addParty(party) {
+function add(party) {
   return db("parties").insert({ ...party, user_id: party.id });
 }
 
-function getParty(id) {
+function get(id) {
   return db('parties').select('parties.id', 'username', 'when', 'theme', 'numberGuest', 'budget', 'spentBudget').where({user_id: id}).innerJoin('users', 'user_id', 'users.id')
 }
 
-function editParty(id, party) {
+function edit(id, party) {
   return db('parties').where({id}).update({...party});
+}
+
+function remove(id) {
+  return db('parties').where({id}).del();
 }

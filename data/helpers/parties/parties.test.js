@@ -14,14 +14,14 @@ beforeEach(() => {
 });
 
 describe("the parties table helper methods", () => {
-  describe("the addParty function", () => {
+  describe("the add function", () => {
     it("should add party to parties table, and return party id", async () => {
-      const added = await parties.addParty({ id: 1 });
+      const added = await parties.add({ id: 1 });
       expect(added[0]).toBe(1);
       await db("parties").truncate();
     });
   });
-  describe("the getParty function", () => {
+  describe("the get function", () => {
     beforeEach(() => {
       return db("parties").insert({
         budget: 23,
@@ -33,7 +33,7 @@ describe("the parties table helper methods", () => {
     });
 
     it("should retrieve an array containing parties associated with the passed user_id", async () => {
-      const gotParty = await parties.getParty(1);
+      const gotParty = await parties.get(1);
       expect(gotParty).toEqual([
         {
           id: 1,
@@ -52,7 +52,7 @@ describe("the parties table helper methods", () => {
         user_id: 1,
         when: "May 14, 2019"
       });
-      const anotherReq = await parties.getParty(1);
+      const anotherReq = await parties.get(1);
       expect(anotherReq).toEqual([
         {
           budget: 23,
@@ -75,7 +75,7 @@ describe("the parties table helper methods", () => {
       ]);
     });
   });
-  describe("the updateParty function", () => {
+  describe("the edit function", () => {
     beforeEach(() => {
       return db("parties").insert({ user_id: 1 });
     });
@@ -90,8 +90,17 @@ describe("the parties table helper methods", () => {
         numberGuest: 17,
         budget: 35
       };
-      const updated = await parties.editParty(1, newInfo);
+      const updated = await parties.edit(1, newInfo);
       expect(updated).toBe(1);
     });
   });
+  describe('the delete function', () => {
+    beforeEach(() => {
+      return db('parties').insert([{user_id: 1}, {user_id: 2}])
+    })
+    it('should delete the party associated with the passed id', async () => {
+      const removed = await parties.remove(1);
+      expect(removed).toBe(1);
+    })
+  })
 });
