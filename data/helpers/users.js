@@ -13,7 +13,7 @@ async function registerUser({ username, password }) {
     .first();
 }
 
-function getUser({ id }) {
+async function getUser({ id }) {
   return db("users")
     .select("username", "password")
     .where({ id })
