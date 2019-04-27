@@ -1,8 +1,8 @@
 const parties = require("./parties.js");
 const db = require("../../dbConfig.js");
 
-beforeAll(async () => {
-  return await db("users").insert({ username: "test", password: "testp" });
+beforeAll(() => {
+  return db("users").insert({ username: "test", password: "testp" });
 });
 
 afterAll(() => {
@@ -36,6 +36,7 @@ describe("the parties table helper methods", () => {
       const gotParty = await parties.getParty(1);
       expect(gotParty).toEqual([
         {
+          id: 1,
           budget: 23,
           numberGuest: 56,
           theme: "sock-hop",
@@ -55,6 +56,7 @@ describe("the parties table helper methods", () => {
       expect(anotherReq).toEqual([
         {
           budget: 23,
+          id: 1,
           numberGuest: 56,
           theme: "sock-hop",
           username: "test",
@@ -62,6 +64,7 @@ describe("the parties table helper methods", () => {
           spentBudget: null
         },
         {
+          id: 2,
           budget: 43,
           numberGuest: 23,
           theme: "toga",
@@ -70,6 +73,25 @@ describe("the parties table helper methods", () => {
           spentBudget: null
         }
       ]);
+    });
+  });
+  describe("the updateParty function", () => {
+    beforeEach(() => {
+      return db("parties").insert({ user_id: 1 });
+    });
+
+    afterEach(() => {
+      return db('parties').truncate();
+    })
+    it("should update the party when passed an object containing new values", async () => {
+      const newInfo = {
+        theme: "yoga",
+        when: "May 27, 2019",
+        numberGuest: 17,
+        budget: 35
+      };
+      const updated = await parties.editParty(1, newInfo);
+      expect(updated).toBe(1);
     });
   });
 });
