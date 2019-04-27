@@ -1,5 +1,5 @@
 const users = require("./users.js");
-const db = require("../dbConfig.js");
+const db = require("../../dbConfig.js");
 
 afterAll(() => {
   return db('users').truncate();

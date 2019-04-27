@@ -1,5 +1,5 @@
 const parties = require("./parties.js");
-const db = require("../dbConfig.js");
+const db = require("../../dbConfig.js");
 
 beforeAll(async () => {
   return await db("users").insert({ username: "test", password: "testp" });
