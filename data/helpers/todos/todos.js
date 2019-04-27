@@ -11,11 +11,8 @@ function add(party_id, item) {
   return db("todos").insert({ party_id, item });
 }
 
-function getList(id) {
-  return db("parties")
-    .select("todos.id", "item", "completed")
-    .innerJoin("todos", "parties.id", "todos.party_id")
-    .where({ id });
+function getList(party_id) {
+  return db("todos").where({ party_id });
 }
 
 function update(...todo) {
