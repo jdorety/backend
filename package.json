@@ -25,5 +25,8 @@
     "server": "nodemon index.js",
     "test": "jest --watch --verbose",
     "test-db": "cross-env DB_ENV=testing jest --watch --verbose"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
