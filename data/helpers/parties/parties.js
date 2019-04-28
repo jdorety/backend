@@ -14,22 +14,23 @@ function add(user_id, party) {
 //get party object w/ matching id
 function get(id) {
   return db("parties")
-    .select('parties.id', 'username', 'when', 'theme', 'numberGuest', 'budget', 'spentBudget')
-    .where({ id })
-    .innerJoin("users", "user_id", "users.id")
-    .first();
-}
-//returns array of party objects associated with the passed user_id
-function getList(user_id) {
-  return db("parties")
     .select(
-      "id",
+      "parties.id",
+      "users.username",
       "when",
       "theme",
       "numberGuest",
       "budget",
       "spentBudget"
     )
+    .where({ 'parties.id': id })
+    .innerJoin("users", "parties.user_id", "users.id")
+    .first();
+}
+//returns array of party objects associated with the passed user_id
+function getList(user_id) {
+  return db("parties")
+    .select("id", "when", "theme", "numberGuest", "budget", "spentBudget")
     .where({ user_id });
 }
 //edit party record of matching id w/ changes passed as object
