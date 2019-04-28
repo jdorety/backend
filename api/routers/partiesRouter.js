@@ -13,17 +13,18 @@ router.get("/:id", async (req, res) => {
   try {
     const party = await parties.get(partyId);
     if (party) {
+      //get entertainment list array
       const entList = await entertainment.getList(partyId);
+      //get todo list array
       const tdList = await todos.getList(partyId);
+      //get shopping list array
       const shopList = await shopping.getList(partyId);
-      res
-        .status(200)
-        .json({
-          ...party,
-          entertainment: entList,
-          todos: tdList,
-          shopping: shopList
-        });
+      res.status(200).json({
+        ...party,
+        entertainment: entList,
+        todos: tdList,
+        shopping: shopList
+      });
     } else res.status(404).json({ err: "Party not found" });
   } catch (err) {
     console.log(err);
