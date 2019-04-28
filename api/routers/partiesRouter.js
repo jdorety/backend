@@ -35,13 +35,47 @@ router.get("/:id", async (req, res) => {
 router.get("/:id/todos", async (req, res) => {
   const { id } = req.params;
   try {
-    const tdList = await todos.getList(id);
-    if (tdList.length) {
-      res.status(200).json(tdList);
+    const list = await todos.getList(id);
+    if (list.length) {
+      res.status(200).json(list);
     } else {
       res
         .status(404)
         .json({ err: "No todo lists associated with that party_id" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "Error!" });
+  }
+});
+
+router.get("/:id/entertainment", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const list = await entertainment.getList(id);
+    if (list.length) {
+      res.status(200).json(list);
+    } else {
+      res
+        .status(404)
+        .json({ err: "No entertainment lists associated with that party_id" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "Error!" });
+  }
+});
+
+router.get("/:id/shopping", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const list = await shopping.getList(id);
+    if (list.length) {
+      res.status(200).json(list);
+    } else {
+      res
+        .status(404)
+        .json({ err: "No shopping lists associated with that party_id" });
     }
   } catch (err) {
     console.log(err);
