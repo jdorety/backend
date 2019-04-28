@@ -7,15 +7,9 @@ module.exports = {
   remove
 };
 
-<<<<<<< HEAD
 //adds entertainment option using party_id and item
 function add(party_id, item) {
   return db("entertainment").insert({ party_id, item });
-=======
-//adds entertainment option using object containing party_id and item
-function add(item) {
-  return db("entertainment").insert({ item });
->>>>>>> a500c055b983f9016cf5b9becf9420cef426a4f8
 }
 //gets list of items associated with a party's id
 function getList(party_id) {
