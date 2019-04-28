@@ -3,6 +3,7 @@ const db = require("../../dbConfig.js");
 module.exports = {
   add,
   get,
+  getList,
   edit,
   remove
 };
@@ -10,8 +11,12 @@ module.exports = {
 function add(user_id, party) {
   return db("parties").insert({ ...party, user_id });
 }
+//get party object w/ matching id
+function get(id) {
+  return db('parties').where({id}).first();
+}
 //returns array of party objects associated with the passed user_id
-function get(user_id) {
+function getList(user_id) {
   return db("parties")
     .select(
       "parties.id",
