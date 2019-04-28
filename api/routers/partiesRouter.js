@@ -49,4 +49,23 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const id = req.params.id;
+  const edit = req.body;
+  try {
+    const success = await parties.edit(id, edit);
+    if (success) {
+      const editedParty = await parties.get(success);
+      res.status(200).json(editedParty);
+    } else {
+      res
+        .status(400)
+        .json({ err: "Couldn't update party with given information" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(genericError);
+  }
+});
+
 module.exports = router;
