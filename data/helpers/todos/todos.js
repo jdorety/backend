@@ -12,7 +12,7 @@ function add({ party_id, item }) {
 }
 //return array containing objects associated w/ the passed party_id
 function getList(party_id) {
-  return db("todos").where({ party_id });
+  return db("todos").select('id', 'item', 'completed').where({ party_id });
 }
 //update record w/ matching id, using values passed in as todo object
 function update(id, todo) {
