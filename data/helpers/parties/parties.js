@@ -8,8 +8,8 @@ module.exports = {
   remove
 };
 //adds party record to parties table, w/ user_id of posting user
-function add(user_id, party) {
-  return db("parties").insert({ ...party, user_id });
+function add(party) {
+  return db("parties").insert({ ...party });
 }
 //get party object w/ matching id
 function get(id) {
@@ -23,7 +23,7 @@ function get(id) {
       "budget",
       "spentBudget"
     )
-    .where({ 'parties.id': id })
+    .where({ "parties.id": id })
     .innerJoin("users", "parties.user_id", "users.id")
     .first();
 }

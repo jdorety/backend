@@ -32,4 +32,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  const party = req.body;
+  try {
+    if (party.user_id) {
+      const newParty = await parties.add(party);
+      res.status(201).json(newParty[0]);
+    } else {
+      res
+        .status(400)
+        .json({ err: "Please provide a valid user id for the party" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: genericError });
+  }
+});
+
 module.exports = router;
