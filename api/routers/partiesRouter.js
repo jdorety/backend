@@ -68,4 +68,18 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const removed = await parties.remove(id);
+    if (removed) {
+      res.status(202).json({ message: "Party removed" });
+    } else {
+      res.status(404).json({ err: "Party not found" });
+    }
+  } catch (err) {
+    res.status(500).json(genericError);
+  }
+});
+
 module.exports = router;
