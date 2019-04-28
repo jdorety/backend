@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
     tbl.string('item');
-    tbl.boolean('ready', false);
+    tbl.boolean('ready').defaultTo(false);
   })
 };
 

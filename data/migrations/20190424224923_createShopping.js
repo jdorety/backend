@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
       .onUpdate("CASCADE");
     tbl.string('item').notNullable();
     tbl.integer('quantity').defaultTo(1);
-    tbl.boolean('purchased', false);
+    tbl.boolean('purchased').defaultTo(false);
     tbl.integer('cost');
   })
 };

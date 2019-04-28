@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
     tbl.string("item").notNullable();
-    tbl.boolean("completed");
+    tbl.boolean("completed").defaultTo(false);
   });
 };
 
