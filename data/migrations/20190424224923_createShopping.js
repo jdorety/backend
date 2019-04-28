@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
     tbl.string('item').notNullable();
     tbl.integer('quantity').defaultTo(1);
     tbl.boolean('purchased').defaultTo(false);
-    tbl.integer('cost');
+    tbl.float('cost').defaultTo(1);
   })
 };
 
