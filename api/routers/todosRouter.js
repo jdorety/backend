@@ -16,6 +16,10 @@ router.post("/", async (req, res) => {
       console.log(err);
       res.status(500).json({ err: "Error!" });
     }
+  } else {
+    res
+      .status(400)
+      .json({ err: "Please include a party_id and item in request body" });
   }
 });
 
