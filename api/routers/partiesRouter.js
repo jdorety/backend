@@ -8,7 +8,7 @@ const {
 } = require("../../data/helpers/dbHelpers.js");
 
 const genericError = { err: "There was a problem processing your request" };
-
+//return object with all party information
 router.get("/:id", async (req, res) => {
   const partyId = req.params.id;
   try {
@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).json(genericError);
   }
 });
-
+//return array with list of todo records associated with party id passed in URL
 router.get("/:id/todos", async (req, res) => {
   const { id } = req.params;
   try {
@@ -49,7 +49,7 @@ router.get("/:id/todos", async (req, res) => {
     res.status(500).json({ err: "Error!" });
   }
 });
-
+//return array of entertainment records associated with party id passed in URL
 router.get("/:id/entertainment", async (req, res) => {
   const { id } = req.params;
   try {
@@ -66,7 +66,7 @@ router.get("/:id/entertainment", async (req, res) => {
     res.status(500).json({ err: "Error!" });
   }
 });
-
+//return array of shopping records associated with party id passed in URL
 router.get("/:id/shopping", async (req, res) => {
   const { id } = req.params;
   try {
@@ -83,13 +83,13 @@ router.get("/:id/shopping", async (req, res) => {
     res.status(500).json({ err: "Error!" });
   }
 });
-
+//add new party
 router.post("/", async (req, res) => {
   const party = req.body;
   try {
-    if (party.user_id) {
-      const verifyUser = await users.getUser(party.user_id);
-      if (verifyUser) {
+    if (party.user_id) { //checks if user_id is included
+      const verifyUser = await users.getUser(party.user_id); //checks if user_id matches valid user
+      if (verifyUser) {  //adds party if valid user
         const newParty = await parties.add(party);
         res.status(201).json(newParty[0]);
       } else {
@@ -105,7 +105,7 @@ router.post("/", async (req, res) => {
     res.status(500).json({ err: genericError });
   }
 });
-
+//edit party w/ matching id passed in URL, using object passed in request body
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
   const edit = req.body;
@@ -124,7 +124,7 @@ router.put("/:id", async (req, res) => {
     res.status(500).json(genericError);
   }
 });
-
+//delete record w/ party id matching one passed in URL
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
   try {
