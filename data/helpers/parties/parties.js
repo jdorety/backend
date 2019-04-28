@@ -13,7 +13,9 @@ function add(user_id, party) {
 }
 //get party object w/ matching id
 function get(id) {
-  return db('parties').where({id}).first();
+  return db("parties")
+    .where({ id })
+    .first();
 }
 //returns array of party objects associated with the passed user_id
 function getList(user_id) {
