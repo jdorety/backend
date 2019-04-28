@@ -3,7 +3,8 @@ const {
   parties,
   entertainment,
   todos,
-  shopping
+  shopping,
+  users
 } = require("../../data/helpers/dbHelpers.js");
 
 const genericError = { err: "There was a problem processing your request" };
@@ -87,8 +88,13 @@ router.post("/", async (req, res) => {
   const party = req.body;
   try {
     if (party.user_id) {
-      const newParty = await parties.add(party);
-      res.status(201).json(newParty[0]);
+      const verifyUser = await users.getUser(party.user_id);
+      if (verifyUser) {
+        const newParty = await parties.add(party);
+        res.status(201).json(newParty[0]);
+      } else {
+        res.status(404).json({ err: "Specified user does not exist" });
+      }
     } else {
       res
         .status(400)
