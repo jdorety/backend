@@ -9,7 +9,7 @@ const server = express();
 
 server.use(cors(), helmet(), express.json());
 
-server.use("/api/users", userRouter);
+server.use("/api/user", userRouter);
 server.use("/api/party", partiesRouter);
 
 server.get("/", (req, res) => {
