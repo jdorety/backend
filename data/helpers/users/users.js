@@ -13,9 +13,9 @@ async function registerUser({ username, password }) {
     .first();
 }
 
-async function getUser({ id }) {
+async function getUser( id ) {
   return db("users")
-    .select("username", "password")
+    .select("username")
     .where({ id })
     .first();
 }
