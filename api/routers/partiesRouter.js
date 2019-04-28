@@ -32,6 +32,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/:id/todos", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const tdList = await todos.getList(id);
+    if (tdList.length) {
+      res.status(200).json(tdList);
+    } else {
+      res
+        .status(404)
+        .json({ err: "No todo lists associated with that party_id" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "Error!" });
+  }
+});
+
 router.post("/", async (req, res) => {
   const party = req.body;
   try {
