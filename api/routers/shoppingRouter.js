@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { shopping } = require("../../data/helpers/dbHelpers.js");
+const { shopping, parties } = require("../../data/helpers/dbHelpers.js");
 
 router.post("/", async (req, res) => {
   const newItem = req.body;

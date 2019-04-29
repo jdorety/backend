@@ -8,8 +8,8 @@ module.exports = {
 };
 
 //adds entertainment option using party_id and item
-function add(party_id, item) {
-  return db("entertainment").insert({ party_id, item });
+function add(item) {
+  return db("entertainment").insert({ ...item });
 }
 //gets list of items associated with a party's id
 function getList(party_id) {

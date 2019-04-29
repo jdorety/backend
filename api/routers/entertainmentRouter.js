@@ -1,27 +1,6 @@
 const router = require("express").Router();
 
-const { entertainment } = require("../../data/helpers/dbHelpers.js");
-
-router.post("/", async (req, res) => {
-  const newItem = req.body;
-  if (newItem.party_id && newItem.item) {
-    try {
-      const success = await entertainment.add(newItem);
-      if (success) {
-        res.status(201).json({ id: success[0] });
-      } else {
-        res.status(400).json({ err: "Couldn't add item" });
-      }
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ err: "Error!" });
-    }
-  } else {
-    res
-      .status(400)
-      .json({ err: "Please include a party_id and item in request body" });
-  }
-});
+const { entertainment, parties } = require("../../data/helpers/dbHelpers.js");
 
 router.post("/", async (req, res) => {
   const newItem = req.body;
@@ -46,6 +25,26 @@ router.post("/", async (req, res) => {
     res
       .status(400)
       .json({ err: "Please include a party_id and item in request body" });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const editItem = req.body;
+  const { id } = req.params;
+  try {
+    if (editItem.item || editItem.completed) {
+      const edited = await entertainment.update(id, editItem);
+      if (edited) {
+        res.status(201).json(edited);
+      } else {
+        res.status(400).json({ err: "Couldn't edit specified entry" });
+      }
+    } else {
+      res.status(400).json({ err: "Please include valid entry" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "Error!" });
   }
 });
 
