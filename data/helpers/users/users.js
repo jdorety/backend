@@ -9,7 +9,6 @@ module.exports = {
 async function registerUser({ username, password }) {
   await db("users").insert({ username, password });
   return db("users")
-    .select("username", "id")
     .where({ username })
     .first();
 }

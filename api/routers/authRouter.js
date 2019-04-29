@@ -12,8 +12,10 @@ router.post("/register", async (req, res) => {
       const hashword = bcrypt.hashSync(newUser.password, 12);
       newUser.password = hashword;
       user = await users.registerUser(newUser);
+      console.log(user);
       if (user) {
-        res.status(201).json({ message: `Welcome ${user.username}` });
+        const token = createToken(user);
+        res.status(201).json({ message: `Welcome ${user.username}`, token });
       } else {
         res
           .status(400)
@@ -35,6 +37,7 @@ router.post("/login", async (req, res) => {
       //check for username and password
       const checkUser = await users.getByName(username); //verify user existence
       if (checkUser && bcrypt.compareSync(password, checkUser.password)) {
+        console.log(checkUser)
         //compare passwords
         const token = createToken(checkUser); //send JWT for authentication purposes
         res.status(200).json({ message: `Welcome ${username}!`, token });
