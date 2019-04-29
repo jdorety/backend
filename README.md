@@ -33,11 +33,17 @@ Use [this rubric](https://docs.google.com/spreadsheets/d/1sFgvt8HtqNCw32YC8Wvrg
 
 ## API documentation
 
+### **Authentication Endpoints**
+
+| HTTP method | endpoint             | description                                                                    |
+| ----------- | -------------------- | ------------------------------------------------------------------------------ |
+| **POST**    | `/api/auth/register` | post object containing `username` and `password` to add user to database.      |
+| **POST**    | `/api/auth/login`    | post object containing `username` and `password` to authenticate existing user |
+
 ### **User Endpoints**
 
 | HTTP method | endpoint                 | description                                                                                  |
 | ----------- | ------------------------ | -------------------------------------------------------------------------------------------- |
-| **POST**    | `/api/users/register`    | post object containing `username` and `password` to add user to database.                    |
 | **GET**     | `/api/users/:id/parties` | `:id = user_id` Pass user id in endpoint. Returns array of all parties associated with user. |
 | **GET**     | `/api/users/:id`         | Find user by id number.                                                                      |
 
