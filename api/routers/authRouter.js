@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const { users } = require("../../data/helpers/dbHelpers.js");
 const secret = process.env.SECRET || ".env is not working right now";
@@ -27,19 +28,27 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
-  const {username, password} = req.body;
-  if (username && password) { //check for username and password
-    const checkUser = await users.getByName(username); //verify user existence
-    if (checkUser) {
-
-    } else {  //responds if user doesn't exist
-      res.status(404).json({err: "User not found"})
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    if (username && password) {
+      //check for username and password
+      const checkUser = await users.getByName(username); //verify user existence
+      if (checkUser && bcrypt.compareSync(password, checkUser.password)) {
+        const token = createToken(checkUser);
+        res.status(200).json({ message: `Welcome ${username}!`, token });
+      } else {
+        //responds if user doesn't exist
+        res.status(404).json({ err: "Please provide correct credentials" });
+      }
+    } else {
+      res.status(400).json({ err: "Please provide username and password" });
     }
-  } else {
-    res.status(400).json({err: "Please provide username and password"})
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "There was a problem with your request" });
   }
-})
+});
 
 function createToken(user) {
   const payload = {
