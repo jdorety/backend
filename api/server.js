@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 
+const authRouter = require('./routers/authRouter.js');
 const userRouter = require("./routers/userRouter.js");
 const partiesRouter = require("./routers/partiesRouter.js");
 const todosRouter = require("./routers/todosRouter.js");
@@ -12,6 +13,7 @@ const server = express();
 
 server.use(cors(), helmet(), express.json());
 
+server.use("/api/auth", authRouter);
 server.use("/api/user", userRouter);
 server.use("/api/party", partiesRouter);
 server.use("/api/todos", todosRouter);
