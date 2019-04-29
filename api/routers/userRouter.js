@@ -1,6 +1,8 @@
 const router = require("express").Router();
-const { users, parties } = require("../../data/helpers/dbHelpers.js");
+const bcrypt = require("bcryptjs");
 
+const { users, parties } = require("../../data/helpers/dbHelpers.js");
+const secret = process.env.SECRET || ".env is not working right now";
 const genericError = { err: "There was a problem processing your request" };
 
 router.get("/:id", async (req, res) => {
@@ -35,6 +37,8 @@ router.post("/register", async (req, res) => {
   const newUser = req.body;
   if (newUser.username && newUser.password) {
     try {
+      const hashword = bcrypt.hashSync(newUser.password, 12);
+      newUser.password = hashword;
       user = await users.registerUser(newUser);
       if (user) {
         res.status(201).json({ message: `Welcome ${user.username}` });
