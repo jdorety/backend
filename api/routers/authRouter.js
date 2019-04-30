@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const { users } = require("../../data/helpers/dbHelpers.js");
 const secret = process.env.SECRET || ".env is not working right now";
+const jwtSecret = process.env.JWT_SECRET;
 
 router.post("/register", async (req, res) => {
   const newUser = req.body;
@@ -65,7 +66,7 @@ function createToken(user) {
     expiresIn: "1d"
   };
 
-  return jwt.sign(payload, secret, options);
+  return jwt.sign(payload, jwtSecret, options);
 }
 
 module.exports = router;
