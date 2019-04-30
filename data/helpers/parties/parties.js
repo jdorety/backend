@@ -11,7 +11,7 @@ module.exports = {
 function add(party) {
   return db("parties")
     .insert({ ...party })
-    .returning({ id });
+    .returning('id');
 }
 //get party object w/ matching id
 function get(id) {
