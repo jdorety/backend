@@ -44,8 +44,8 @@ Use [this rubric](https://docs.google.com/spreadsheets/d/1sFgvt8HtqNCw32YC8Wvrg
 
 | HTTP method | endpoint                 | description                                                                                  |
 | ----------- | ------------------------ | -------------------------------------------------------------------------------------------- |
-| **GET**     | `/api/users/:id/parties` | `:id = user_id` Pass user id in endpoint. Returns array of all parties associated with user. |
-| **GET**     | `/api/users/:id`         | Find user by id number.                                                                      |
+| **GET**     | `/api/user/:id/parties` | `:id = user_id` Pass user id in endpoint. Returns array of all parties associated with user. |
+| **GET**     | `/api/user/:id`         | Find user by id number.                                                                      |
 
 ### **Party Endpoints**
 
