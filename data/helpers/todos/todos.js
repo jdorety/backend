@@ -8,7 +8,7 @@ module.exports = {
 };
 //add todo item to todos table using object containing party_id and item
 function add(item) {
-  return db("todos").insert({ ...item });
+  return db("todos").insert({ ...item }).returning('id');
 }
 //return array containing objects associated w/ the passed party_id
 function getList(party_id) {

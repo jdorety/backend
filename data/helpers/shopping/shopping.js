@@ -8,7 +8,9 @@ module.exports = {
 };
 //add passed item object to shopping table
 function add(item) {
-  return db("shopping").insert({ ...item });
+  return db("shopping")
+    .insert({ ...item })
+    .returning("id");
 }
 //get array containing objects associated with the party_id passed
 function getList(party_id) {
