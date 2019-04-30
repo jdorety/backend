@@ -93,7 +93,7 @@ router.post("/", async (req, res) => {
       if (verifyUser) {
         //adds party if valid user
         const newParty = await parties.add(party);
-        res.status(201).json(newParty[0]);
+        res.status(201).json(newParty);
       } else {
         res.status(404).json({ err: "Specified user does not exist" });
       }
