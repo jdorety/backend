@@ -32,7 +32,7 @@ router.put("/:id", async (req, res) => {
   const editItem = req.body;
   const { id } = req.params;
   try {
-    if (editItem.item || editItem.complete) {
+    if (editItem.item || editItem.purchased) {
       const edited = await shopping.update(id, editItem);
       if (edited) {
         res.status(201).json(edited);
