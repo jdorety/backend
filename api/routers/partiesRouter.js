@@ -87,9 +87,11 @@ router.get("/:id/shopping", async (req, res) => {
 router.post("/", async (req, res) => {
   const party = req.body;
   try {
-    if (party.user_id) { //checks if user_id is included
+    if (party.user_id) {
+      //checks if user_id is included
       const verifyUser = await users.getUser(party.user_id); //checks if user_id matches valid user
-      if (verifyUser) {  //adds party if valid user
+      if (verifyUser) {
+        //adds party if valid user
         const newParty = await parties.add(party);
         res.status(201).json(newParty[0]);
       } else {
