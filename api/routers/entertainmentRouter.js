@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { todos, parties } = require("../../data/helpers/dbHelpers.js");
+const { entertainment, parties } = require("../../data/helpers/dbHelpers.js");
 
 router.post("/", async (req, res) => {
   const newItem = req.body;
@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
     try {
       const verifyParty = await parties.get(newItem.party_id);
       if (verifyParty) {
-        const success = await todos.add(newItem);
+        const success = await entertainment.add(newItem);
         if (success) {
           res.status(201).json({ id: success[0] });
         } else {
@@ -33,7 +33,7 @@ router.put("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     if (editItem.item || editItem.completed) {
-      const edited = await todos.update(id, editItem);
+      const edited = await entertainment.update(id, editItem);
       if (edited) {
         res.status(201).json(edited);
       } else {
@@ -51,7 +51,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const deleted = await todos.delete(id);
+    const deleted = await entertainment.delete(id);
     if (deleted) {
       res.status(204).json({ message: "Entry deleted" });
     } else {
