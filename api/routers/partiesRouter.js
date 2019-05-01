@@ -6,6 +6,7 @@ const {
   shopping,
   users
 } = require("../../data/helpers/dbHelpers.js");
+const restrict = require("../../authentication/auth-middleware");
 
 const genericError = { err: "There was a problem processing your request" };
 //return object with all party information
@@ -50,7 +51,7 @@ router.get("/:id/todos", async (req, res) => {
   }
 });
 //return array of entertainment records associated with party id passed in URL
-router.get("/:id/entertainment", async (req, res) => {
+router.get("/:id/entertainment", restrict, async (req, res) => {
   const { id } = req.params;
   try {
     const list = await entertainment.getList(id);
