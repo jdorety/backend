@@ -33,46 +33,52 @@ Use [this rubric](https://docs.google.com/spreadsheets/d/1sFgvt8HtqNCw32YC8Wvrg
 
 ## API documentation
 
+### **Authentication Endpoints**
+
+| HTTP method | endpoint             | description                                                                    |
+| ----------- | -------------------- | ------------------------------------------------------------------------------ |
+| **POST**    | `/api/auth/register` | post object containing `username` and `password` to add user to database.      |
+| **POST**    | `/api/auth/login`    | post object containing `username` and `password` to authenticate existing user |
+
 ### **User Endpoints**
 
-| HTTP method | endpoint                 | description                                                                                  |
-| ----------- | ------------------------ | -------------------------------------------------------------------------------------------- |
-| **POST**    | `/api/users/register`    | post object containing `username` and `password` to add user to database.                    |
-| **GET**     | `/api/users/:id/parties` | `:id = user_id` Pass user id in endpoint. Returns array of all parties associated with user. |
-| **GET**     | `/api/users/:id`         | Find user by id number.                                                                      |
+| HTTP method | endpoint                | description                                                                                  |
+| ----------- | ----------------------- | -------------------------------------------------------------------------------------------- |
+| **GET**     | `/api/user/:id/parties` | `:id = user_id` Pass user id in endpoint. Returns array of all parties associated with user. |
+| **GET**     | `/api/user/:id`         | Find user by id number.                                                                      |
 
 ### **Party Endpoints**
 
 | HTTP method | endpoint                       | description                                                                                                                                                                       |
 | ----------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **POST**    | `/api/party`                   | Post object containing required `user_id`, and can also include `numberGuest` (int), `when` (string formatted `MM-DD-YYYY`), `theme` (str), and `budget` (float) key/value pairs. |
-| **PUT**     | `/api/party/:id`               | Pass `party_id` in URL and object containing keys whose values need changing                                                                                                      |
+| **PUT**     | `/api/party/:id`               | Pass `party_id` in URL and object containing keys whose values need changing. Returns `int` 1 on success                                                                          |
 | **GET**     | `/api/party/:id`               | Retrieve party with `id` specified in URL. Returns object containing all info related to party, including shopping, entertainment, and todo lists                                 |
-| **DELETE**  | `/api/party/:id`               | Delete party object with matching `id`                                                                                                                                            |
 | **GET**     | `/api/party/:id/todos`         | Returns todo list array associated with `party_id` passed in URL                                                                                                                  |
 | **GET**     | `/api/party/:id/entertainment` | Returns entertainment list array associated with `party_id` passed in URL                                                                                                         |
 | **GET**     | `/api/party/:id/shopping`      | Returns shopping list array associated w/ `party_id` passed in URL                                                                                                                |
+| **DELETE**  | `/api/party/:id`               | Delete party object with matching `id`                                                                                                                                            |
 
 ### **ToDo Endpoints**
 
-| HTTP method | endpoint         | description                                                                                                                                                   |
-| ----------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **POST**    | `/api/todos`     | Add new todo item, posting object containing `party_id` (int), `item` (str), and `completed` (boolean). `completed` defaults to false if not included in post |
-| **PUT**     | `/api/todos/:id` | Edit existing todo item with object containing entries for what needs changing                                                                                |
-| **DELETE**  | `/api/todos/:id` | Delete existing todo item that matches `id` passed in URL                                                                                                     |
+| HTTP method | endpoint         | description                                                                                                                                                                            |
+| ----------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **POST**    | `/api/todos`     | Add new todo item, posting object containing `party_id` (int), `item` (str), and `completed` (boolean). `completed` defaults to false if not included in post. Returns `id` on success |
+| **PUT**     | `/api/todos/:id` | Edit existing todo item with object containing entries for what needs changing. Returns `int` 1 on success                                                                             |
+| **DELETE**  | `/api/todos/:id` | Delete existing todo item that matches `id` passed in URL                                                                                                                              |
 
 ### **Entertainment Endpoints**
 
-| HTTP method | endpoint                 | description                                                                                                                                                             |
-| ----------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **POST**    | `api/entertainment`      | Adds entertainment entry to list associated w/ `party_id` posted in object. `party_id` (int) and `item` (str) are required. `ready` will default to false if not passed |
-| **PUT**     | `/api/entertainment/:id` | Edits object w/ matching `id` using passed object to indicate changes                                                                                                   |
-| **DELETE**  | `api/entertainment/:id`  | Deletes entry w/ matching `id` (int)                                                                                                                                    |
+| HTTP method | endpoint                 | description                                                                                                                                                                                      |
+| ----------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **POST**    | `api/entertainment`      | Adds entertainment entry to list associated w/ `party_id` posted in object. `party_id` (int) and `item` (str) are required. `ready` will default to false if not passed. Returns `id` on success |
+| **PUT**     | `/api/entertainment/:id` | Edits object w/ matching `id` using passed object to indicate changes. Returns `int` 1 on success                                                                                                |
+| **DELETE**  | `api/entertainment/:id`  | Deletes entry w/ matching `id` (int)                                                                                                                                                             |
 
 ### **Shopping Endpoints**
 
-| HTTP method | endpoint           | description                                                                                                                                                                                                             |
-| ----------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **POST**    | `api/shopping`     | Adds shopping list entry for required `party_id` (int) entry in posted object. Other entries include `item` (required str), `quantity` (int, defaults to 1), `purchased` (boolean, defaults to false), and `cost` (int) |
-| **PUT**     | `api/shopping/:id` | Edits entry w/ `id` matching one passed in URL, and object with changes in PUT request                                                                                                                                  |
-| **DELETE**  | `api/shopping/:id` | Deletes entry w/ matching id (int)                                                                                                                                                                                      |
+| HTTP method | endpoint           | description                                                                                                                                                                                                                                      |
+| ----------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **POST**    | `api/shopping`     | Adds shopping list entry for required `party_id` (int) entry in posted object. Other entries include `item` (required str), `quantity` (int, defaults to 1), `purchased` (boolean, defaults to false), and `cost` (int). Returns `id` on success |
+| **PUT**     | `api/shopping/:id` | Edits entry w/ `id` matching one passed in URL, and object with changes in PUT request. Returns `int` 1 on success                                                                                                                               |
+| **DELETE**  | `api/shopping/:id` | Deletes entry w/ matching id (int)                                                                                                                                                                                                               |
