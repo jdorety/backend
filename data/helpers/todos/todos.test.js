@@ -1,7 +1,7 @@
 const todos = require("./todos.js");
 const db = require("../../dbConfig.js");
 
-describe("the todo list helpers", () => {
+xdescribe("the todo list helpers", () => {
   describe("add item to todos table", () => {
     beforeAll(async () => {
       return await db("users").insert({

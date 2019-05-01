@@ -4,7 +4,8 @@ module.exports = {
   add,
   getList,
   edit,
-  remove
+  remove,
+  getBudget
 };
 //add passed item object to shopping table
 function add(item) {
@@ -29,4 +30,11 @@ function remove(id) {
   return db("shopping")
     .where({ id })
     .del();
+}
+
+async function getBudget(party_id) {
+  const budget = await db("shopping")
+    .select("cost")
+    .where({ party_id });
+  return budget.map(item => item.cost);
 }

@@ -13,7 +13,7 @@ beforeEach(() => {
   return db("parties").truncate();
 });
 
-describe("the parties table helper methods", () => {
+xdescribe("the parties table helper methods", () => {
   describe("the add function", () => {
     it("should add party to parties table, and return party id", async () => {
       const added = await parties.add({ id: 1 });
