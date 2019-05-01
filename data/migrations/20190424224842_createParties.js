@@ -11,8 +11,8 @@ exports.up = function(knex, Promise) {
     tbl.integer("numberGuest").unsigned();
     tbl.datetime("when");
     tbl.string("theme");
-    tbl.float("budget").defaultTo(1);
-    tbl.float("spentBudget").defaultTo(1);
+    tbl.float("budget").defaultTo(0);
+    tbl.float("spentBudget").defaultTo(0);
   });
 };
 
