@@ -12,7 +12,7 @@ const shoppingRouter = require("./routers/shoppingRouter.js");
 
 const server = express();
 
-server.use(cors(), helmet(), morgan("tiny"), express.json());
+server.use(cors(), helmet(), express.json()), morgan("tiny");
 
 server.use("/api/auth", authRouter);
 server.use("/api/user", userRouter);

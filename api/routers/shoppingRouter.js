@@ -32,9 +32,22 @@ router.put("/:id", async (req, res) => {
   const editItem = req.body;
   const { id } = req.params;
   try {
-    if (editItem.item || editItem.complete) {
+    if (editItem.item || editItem.purchased || editItem.cost) {
+      //edit shopping list item record in DB
       const edited = await shopping.update(id, editItem);
+      //if edit is succesful...
       if (edited) {
+        //get the party_id of the edited item
+        const { party_id } = await shopping.getById(id);
+        console.log(party_id);
+        //get array of all costs associated with that party_id
+        const newBudget = await shopping.getBudget(party_id);
+        if (newBudget) {
+          //if there are any costs, they are added up
+          const total = newBudget.reduce((acc, curr) => (acc += curr));
+          //edits the party record with the updated budget
+          await parties.edit(id, { spentBudget: total });
+        }
         res.status(201).json(edited);
       } else {
         res.status(400).json({ err: "Couldn't edit specified entry" });

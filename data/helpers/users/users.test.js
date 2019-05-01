@@ -6,7 +6,7 @@ beforeEach(async () => {
 });
 
 
-describe("Database Helpers", () => {
+xdescribe("Database Helpers", () => {
 
   describe("users table helpers", () => {
     it("adds user to users table", async () => {

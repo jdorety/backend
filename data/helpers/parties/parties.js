@@ -9,7 +9,9 @@ module.exports = {
 };
 //adds party record to parties table, w/ user_id of posting user
 function add(party) {
-  return db("parties").insert({ ...party });
+  return db("parties")
+    .insert({ ...party })
+    .returning('id');
 }
 //get party object w/ matching id
 function get(id) {

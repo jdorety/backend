@@ -32,7 +32,7 @@ router.put("/:id", async (req, res) => {
   const editItem = req.body;
   const { id } = req.params;
   try {
-    if (editItem.item || editItem.completed) {
+    if (editItem.item || editItem.ready) {
       const edited = await entertainment.update(id, editItem);
       if (edited) {
         res.status(201).json(edited);
