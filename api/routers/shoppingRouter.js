@@ -42,11 +42,12 @@ router.put("/:id", async (req, res) => {
         console.log(party_id);
         //get array of all costs associated with that party_id
         const newBudget = await shopping.getBudget(party_id);
+        console.log(newBudget);
         if (newBudget) {
           //if there are any costs, they are added up
           const total = newBudget.reduce((acc, curr) => (acc += curr));
           //edits the party record with the updated budget
-          await parties.edit(id, { spentBudget: total });
+          await parties.edit(party_id, { spentBudget: total });
         }
         res.status(201).json(edited);
       } else {

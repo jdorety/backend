@@ -34,16 +34,14 @@ function remove(id) {
 }
 
 function getById(id) {
-  return db("shopping").where({ id }).first();
+  return db("shopping")
+    .where({ id })
+    .first();
 }
 
 async function getBudget(party_id) {
   const budget = await db("shopping")
     .select("cost")
     .where({ party_id });
-  if (budget.length) {
-    return budget.map(item => item.cost);
-  } else {
-    return;
-  }
+  return budget.map(item => item.cost);
 }
