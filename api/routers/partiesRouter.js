@@ -6,7 +6,7 @@ const {
   shopping,
   users
 } = require("../../data/helpers/dbHelpers.js");
-const restrict = require("../../authentication/auth-middleware");
+const restrict = require("../../middleware/auth-middleware");
 
 const genericError = { err: "There was a problem processing your request" };
 //return object with all party information
