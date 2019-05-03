@@ -68,16 +68,26 @@ router.delete("/:id", async (req, res) => {
     const image = await moodBoard.getById(id);
     if (image) {
       cloudinary.uploader.destroy(image.public_id, async (error, result) => {
-        if (result.result === "ok") {
-          console.log(result);
+        console.log(error, result);
+        // if (result == { result: "ok" }) {
+        //   const deleted = await moodBoard.remove(id);
+        //   if (deleted) {
+        //     res.status(200).json({ message: "Image deleted" });
+        //   } else {
+        //     res.status(404).json({ err: "Image not found in database" });
+        //   }
+        // } else {
+        //   res.status(404).json({ err: "Image does not exist" });
+        // }
+        try {
           const deleted = await moodBoard.remove(id);
           if (deleted) {
             res.status(200).json({ message: "Image deleted" });
           } else {
-            res.status(404).json({ err: "Image not found in database" });
+            res.status(404).json({ err: "Image not found" });
           }
-        } else {
-          console.log(error);
+        } catch {
+          res.status(500).json({ err: "Couldn't delete item" });
         }
       });
     } else {
