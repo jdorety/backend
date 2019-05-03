@@ -9,6 +9,7 @@ const partiesRouter = require("./routers/partiesRouter.js");
 const todosRouter = require("./routers/todosRouter.js");
 const entertainmentRouter = require("./routers/entertainmentRouter.js");
 const shoppingRouter = require("./routers/shoppingRouter.js");
+const moodRouter = require("./routers/moodRouter.js");
 
 const server = express();
 
@@ -20,6 +21,7 @@ server.use("/api/party", partiesRouter);
 server.use("/api/todos", todosRouter);
 server.use("/api/entertainment", entertainmentRouter);
 server.use("/api/shopping", shoppingRouter);
+server.use("/api/upload", moodRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ message: "Welcome to build week!" });
