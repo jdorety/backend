@@ -14,7 +14,7 @@ const memStorage = multer.memoryStorage();
 
 const upload = multer({ storage: memStorage });
 
-router.post("/:party_id", upload.single("photo"), async function(req, res) {
+router.post("/:party_id", upload.single("photo"), async (req, res) => {
   const { party_id } = req.params;
   try {
     if (req.file) {
@@ -40,6 +40,35 @@ router.post("/:party_id", upload.single("photo"), async function(req, res) {
     res
       .status(500)
       .json({ err: "There was a problem processing your request" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const image = await moodBoard.getById(id);
+    if (image) {
+      cloudinary.uploader.destroy(image.public_id, async (error, result) => {
+        if (result.result === "ok") {
+          console.log(result);
+          const deleted = await moodBoard.remove(id);
+          if (deleted) {
+            res.status(200).json({ message: "Image deleted" });
+          } else {
+            res.status(404).json({ err: "Image not found in database" });
+          }
+        } else {
+          console.log(error);
+        }
+      });
+    } else {
+      res.status(404).json({ err: "No image at that id" });
+    }
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ err: "There was a problem processing that request" });
   }
 });
 
