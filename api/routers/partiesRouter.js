@@ -4,7 +4,8 @@ const {
   entertainment,
   todos,
   shopping,
-  users
+  users,
+  moodBoard
 } = require("../../data/helpers/dbHelpers.js");
 const restrict = require("../../middleware/auth-middleware");
 
@@ -21,11 +22,14 @@ router.get("/:id", async (req, res) => {
       const tdList = await todos.getList(partyId);
       //get shopping list array
       const shopList = await shopping.getList(partyId);
+      //get mood board array
+      const mBoard = await moodBoard.getList(partyId);
       res.status(200).json({
         ...party,
         entertainment: entList,
         todos: tdList,
-        shopping: shopList
+        shopping: shopList,
+        moodBoard: mBoard
       });
     } else res.status(404).json({ err: "Party not found" });
   } catch (err) {
@@ -47,7 +51,7 @@ router.get("/:id/todos", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ err: "Error!" });
+    res.status(500).json({ genericError });
   }
 });
 //return array of entertainment records associated with party id passed in URL
@@ -64,7 +68,7 @@ router.get("/:id/entertainment", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ err: "Error!" });
+    res.status(500).json({ genericError });
   }
 });
 //return array of shopping records associated with party id passed in URL
@@ -81,9 +85,27 @@ router.get("/:id/shopping", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ err: "Error!" });
+    res.status(500).json({ genericError });
   }
 });
+//return array of mood board pictures associated w/ party_id in req.params
+router.get("/:party_id/mood-board", async (req, res) => {
+  const { party_id } = req.params;
+  try {
+    const mood = await moodBoard.getList(party_id);
+    if (mood.length) {
+      res.status(200).json(mood);
+    } else {
+      res
+        .status(404)
+        .json({ err: "No mood board associated with that party_id" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(genericError);
+  }
+});
+
 //add new party
 router.post("/", async (req, res) => {
   const party = req.body;
