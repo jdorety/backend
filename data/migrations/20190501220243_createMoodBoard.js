@@ -1,6 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("mood_board", tbl => {
     tbl.increments();
+    tbl.string("public_id").notNullable();
     tbl
       .integer("party_id")
       .unsigned()
@@ -8,7 +9,7 @@ exports.up = function(knex, Promise) {
       .inTable("parties")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
-    tbl.text("url");
+    tbl.text("url").notNullable();
   });
 };
 

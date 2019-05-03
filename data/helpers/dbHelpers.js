@@ -3,5 +3,6 @@ module.exports = {
   parties: require("./parties/parties.js"),
   shopping: require("./shopping/shopping.js"),
   todos: require("./todos/todos.js"),
-  users: require("./users/users.js")
+  users: require("./users/users.js"),
+  moodBoard: require("./mood_board/moodBoard.js")
 };
