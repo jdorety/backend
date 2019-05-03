@@ -82,3 +82,11 @@ Use [this rubric](https://docs.google.com/spreadsheets/d/1sFgvt8HtqNCw32YC8Wvrg
 | **POST**    | `api/shopping`     | Adds shopping list entry for required `party_id` (int) entry in posted object. Other entries include `item` (required str), `quantity` (int, defaults to 1), `purchased` (boolean, defaults to false), and `cost` (int). Returns `id` on success |
 | **PUT**     | `api/shopping/:id` | Edits entry w/ `id` matching one passed in URL, and object with changes in PUT request. Returns `int` 1 on success                                                                                                                               |
 | **DELETE**  | `api/shopping/:id` | Deletes entry w/ matching id (int)                                                                                                                                                                                                               |
+
+### **Mood Board Enpoints**
+
+| HTTP method | endpoint             | description                                                                                                                                                            |
+| ----------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **POST**    | `api/mood/:party_id` | Add image to mood board associated with party that matches `party_id`. Returns image's `id` from the mood_board table. Only supports JPEG format at the moment         |
+| **DELETE**  | `api/mood/:id`       | Deletes image assocated with `id` in mood_board table, and from hosting service. Returns only status code 200 on success, and status 404 if image does not exist in DB |
+| **GET**     | `api/mood/:id`       | Retrieve image record with associated `id` from mood_board table                                                                                                       |

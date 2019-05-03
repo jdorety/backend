@@ -1,4 +1,2 @@
 /node_modules
 .env
-data/party_planner.sqlite3
-data/testing_db.sqlite3
