@@ -14,9 +14,7 @@ function add(image) {
 }
 
 function getList(party_id) {
-  return db("mood_board")
-    .select("id", "party_id", "url")
-    .where({ party_id });
+  return db("mood_board").where({ party_id });
 }
 
 function getById(id) {

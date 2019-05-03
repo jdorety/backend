@@ -43,6 +43,25 @@ router.post("/:party_id", upload.single("photo"), async (req, res) => {
   }
 });
 
+router.get("/:party_id", async (req, res) => {
+  const { party_id } = req.params;
+  try {
+    const mBoard = await moodBoard.getList(party_id);
+    if (mBoard.length) {
+      res.status(200).json(mBoard);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No mood board associated with that party_id" });
+    }
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ err: "There was a problem processing your request" });
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {

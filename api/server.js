@@ -21,7 +21,7 @@ server.use("/api/party", partiesRouter);
 server.use("/api/todos", todosRouter);
 server.use("/api/entertainment", entertainmentRouter);
 server.use("/api/shopping", shoppingRouter);
-server.use("/api/upload", moodRouter);
+server.use("/api/mood", moodRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ message: "Welcome to build week!" });
