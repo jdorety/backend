@@ -89,4 +89,4 @@ Use [this rubric](https://docs.google.com/spreadsheets/d/1sFgvt8HtqNCw32YC8Wvrg
 | ----------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **POST**    | `api/mood/:party_id` | Add image to mood board associated with party that matches `party_id`. Returns image's `id` from the mood_board table. Only supports JPEG format at the moment         |
 | **DELETE**  | `api/mood/:id`       | Deletes image assocated with `id` in mood_board table, and from hosting service. Returns only status code 200 on success, and status 404 if image does not exist in DB |
-| **GET**     | `api/mood/:id`       | Retrieve image record with associated `id` from mood_board table                                                                                                       |
+| **GET**     | `api/mood/:party_id` | Retrieve array of mood board images associated with `party_id`                                                                                                         |
