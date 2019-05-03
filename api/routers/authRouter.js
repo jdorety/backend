@@ -16,7 +16,9 @@ router.post("/register", async (req, res) => {
       console.log(user);
       if (user) {
         const token = createToken(user);
-        res.status(201).json({ message: `Welcome ${user.username}`, token });
+        res
+          .status(201)
+          .json({ message: `Welcome ${user.username}`, id: user.id, token });
       } else {
         res
           .status(400)
@@ -38,10 +40,12 @@ router.post("/login", async (req, res) => {
       //check for username and password
       const checkUser = await users.getByName(username); //verify user existence
       if (checkUser && bcrypt.compareSync(password, checkUser.password)) {
-        console.log(checkUser)
+        console.log(checkUser);
         //compare passwords
         const token = createToken(checkUser); //send JWT for authentication purposes
-        res.status(200).json({ message: `Welcome ${username}!`, token });
+        res
+          .status(200)
+          .json({ message: `Welcome ${username}!`, id: user.id, token });
       } else {
         //responds if password doesn't match
         res.status(404).json({ err: "Please provide correct credentials" });

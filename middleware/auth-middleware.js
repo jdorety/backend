@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
       if (err) {
         res.status(401).json({ err: "1Please log in to continue" });
       } else {
-        req.decodedJwt = decodedToken;
+        req.user_id = decodedToken.user_id;
         next();
       }
     });
