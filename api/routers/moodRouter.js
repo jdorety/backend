@@ -18,6 +18,7 @@ router.post("/:party_id", upload.single("photo"), async (req, res) => {
   const { party_id } = req.params;
   try {
     if (req.file) {
+      //convert buffer content to format readable by cloudinary uploader
       const jpgUp = dUri.format(".jpg", req.file.buffer);
       cloudinary.uploader.upload(jpgUp.content, async function(err, result) {
         if (err) {
@@ -43,22 +44,43 @@ router.post("/:party_id", upload.single("photo"), async (req, res) => {
   }
 });
 
+router.get("/:party_id", async (req, res) => {
+  const { party_id } = req.params;
+  try {
+    const mBoard = await moodBoard.getList(party_id);
+    if (mBoard.length) {
+      res.status(200).json(mBoard);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No mood board associated with that party_id" });
+    }
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ err: "There was a problem processing your request" });
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
+    //get image info from mood_board table
     const image = await moodBoard.getById(id);
     if (image) {
+      //remove image from hosting service
       cloudinary.uploader.destroy(image.public_id, async (error, result) => {
-        if (result.result === "ok") {
-          console.log(result);
+        try {
+          //remove image record from server DB
           const deleted = await moodBoard.remove(id);
           if (deleted) {
             res.status(200).json({ message: "Image deleted" });
           } else {
-            res.status(404).json({ err: "Image not found in database" });
+            res.status(404).json({ err: "Image not found" });
           }
-        } else {
-          console.log(error);
+        } catch {
+          res.status(500).json({ err: "Couldn't delete item" });
         }
       });
     } else {
