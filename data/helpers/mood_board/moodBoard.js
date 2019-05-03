@@ -20,7 +20,9 @@ function getList(party_id) {
 }
 
 function getById(id) {
-  return db("mood_board").where({ id });
+  return db("mood_board")
+    .where({ id })
+    .first();
 }
 
 function remove(id) {
