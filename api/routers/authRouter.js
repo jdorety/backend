@@ -8,13 +8,16 @@ const jwtSecret = process.env.JWT_SECRET;
 
 router.post("/register", async (req, res) => {
   const newUser = req.body;
+  //require username and password
   if (newUser.username && newUser.password) {
     try {
+      // hash password and replace plaintext 
       const hashword = bcrypt.hashSync(newUser.password, 12);
       newUser.password = hashword;
+      //add user to users table in DB
       user = await users.registerUser(newUser);
-      console.log(user);
       if (user) {
+        //create JWT and send to client
         const token = createToken(user);
         res
           .status(201)
