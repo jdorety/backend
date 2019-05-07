@@ -1,8 +1,9 @@
 const router = require("express").Router();
+const private = require("../../middleware/auth-middleware");
 
 const { shopping, parties } = require("../../data/helpers/dbHelpers.js");
 
-router.post("/", async (req, res) => {
+router.post("/", private, async (req, res) => {
   const newItem = req.body;
   if (newItem.party_id && newItem.item) {
     try {
@@ -28,7 +29,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", private, async (req, res) => {
   const editItem = req.body;
   const { id } = req.params;
   try {
@@ -62,7 +63,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", private, async (req, res) => {
   const { id } = req.params;
   try {
     const deleted = await shopping.delete(id);

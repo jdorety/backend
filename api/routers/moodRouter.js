@@ -3,6 +3,7 @@ const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const Datauri = require("datauri");
 const path = require("path");
+const private = require("../../middleware/auth-middleware.js");
 
 const { moodBoard } = require("../../data/helpers/dbHelpers.js");
 
@@ -14,7 +15,7 @@ const dataUri = req =>
 const memStorage = multer.memoryStorage();
 const upload = multer({ storage: memStorage });
 
-router.post("/:party_id", upload.single("photo"), async (req, res) => {
+router.post("/:party_id", private, upload.single("photo"), async (req, res) => {
   const { party_id } = req.params;
   try {
     if (req.file) {
@@ -44,7 +45,7 @@ router.post("/:party_id", upload.single("photo"), async (req, res) => {
   }
 });
 
-router.get("/:party_id", async (req, res) => {
+router.get("/:party_id", private, async (req, res) => {
   const { party_id } = req.params;
   try {
     const mBoard = await moodBoard.getList(party_id);
@@ -63,7 +64,7 @@ router.get("/:party_id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", private, async (req, res) => {
   const { id } = req.params;
   try {
     //get image info from mood_board table

@@ -1,9 +1,10 @@
 const router = require("express").Router();
+const private = require("../../middleware/auth-middleware");
 
 const { users, parties } = require("../../data/helpers/dbHelpers.js");
 const genericError = { err: "There was a problem processing your request" };
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", private, async (req, res) => {
   const id = req.params.id;
   try {
     const user = await users.getUser(id);
@@ -17,7 +18,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/:id/parties", async (req, res) => {
+router.get("/:id/parties", private, async (req, res) => {
   try {
     const userId = req.params.id;
     const partyList = await parties.getList(userId);
@@ -30,6 +31,5 @@ router.get("/:id/parties", async (req, res) => {
     res.status(500).json(genericError);
   }
 });
-
 
 module.exports = router;

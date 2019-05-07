@@ -7,11 +7,11 @@ const {
   users,
   moodBoard
 } = require("../../data/helpers/dbHelpers.js");
-const restrict = require("../../middleware/auth-middleware");
+const private = require("../../middleware/auth-middleware");
 
 const genericError = { err: "There was a problem processing your request" };
 //return object with all party information
-router.get("/:id", async (req, res) => {
+router.get("/:id", private, async (req, res) => {
   const partyId = req.params.id;
   try {
     const party = await parties.get(partyId);
@@ -38,7 +38,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 //return array with list of todo records associated with party id passed in URL
-router.get("/:id/todos", async (req, res) => {
+router.get("/:id/todos", private, async (req, res) => {
   const { id } = req.params;
   try {
     const list = await todos.getList(id);
@@ -55,7 +55,7 @@ router.get("/:id/todos", async (req, res) => {
   }
 });
 //return array of entertainment records associated with party id passed in URL
-router.get("/:id/entertainment", async (req, res) => {
+router.get("/:id/entertainment", private, async (req, res) => {
   const { id } = req.params;
   try {
     const list = await entertainment.getList(id);
@@ -72,7 +72,7 @@ router.get("/:id/entertainment", async (req, res) => {
   }
 });
 //return array of shopping records associated with party id passed in URL
-router.get("/:id/shopping", async (req, res) => {
+router.get("/:id/shopping", private, async (req, res) => {
   const { id } = req.params;
   try {
     const list = await shopping.getList(id);
@@ -89,7 +89,7 @@ router.get("/:id/shopping", async (req, res) => {
   }
 });
 //return array of mood board pictures associated w/ party_id in req.params
-router.get("/:party_id/mood-board", async (req, res) => {
+router.get("/:party_id/mood-board", private, async (req, res) => {
   const { party_id } = req.params;
   try {
     const mood = await moodBoard.getList(party_id);
@@ -107,7 +107,7 @@ router.get("/:party_id/mood-board", async (req, res) => {
 });
 
 //add new party
-router.post("/", async (req, res) => {
+router.post("/", private, async (req, res) => {
   const party = req.body;
   try {
     if (party.user_id) {
@@ -131,7 +131,7 @@ router.post("/", async (req, res) => {
   }
 });
 //edit party w/ matching id passed in URL, using object passed in request body
-router.put("/:id", async (req, res) => {
+router.put("/:id", private, async (req, res) => {
   const id = req.params.id;
   const edit = req.body;
   try {
@@ -150,7 +150,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 //delete record w/ party id matching one passed in URL
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", private, async (req, res) => {
   const id = req.params.id;
   try {
     const removed = await parties.remove(id);
