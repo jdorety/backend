@@ -13,7 +13,10 @@ const moodRouter = require("./routers/moodRouter.js");
 
 const server = express();
 
-server.use(cors(), helmet(), express.json()), morgan("tiny");
+server.use(cors());
+server.use(helmet());
+server.use(express.json());
+server.use(morgan("tiny"));
 
 server.use("/api/auth", authRouter);
 server.use("/api/user", userRouter);
