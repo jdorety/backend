@@ -1,7 +1,7 @@
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex("shopping")
-    .truncate()
+  return knex
+    .raw("TRUNCATE TABLE shopping RESTART IDENTITY CASCADE")
     .then(function() {
       // Inserts seed entries
       return knex("shopping").insert([

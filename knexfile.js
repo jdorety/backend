@@ -2,10 +2,8 @@
 
 module.exports = {
   development: {
-    client: "sqlite3",
-    connection: {
-      filename: "./data/party_planner.sqlite3"
-    },
+    client: "pg",
+    connection: "postgres://localhost/partyplanner",
     useNullAsDefault: true,
     migrations: {
       directory: "./data/migrations"
@@ -16,10 +14,8 @@ module.exports = {
   },
 
   testing: {
-    client: "sqlite3",
-    connection: {
-      filename: "./data/testing_db.sqlite3"
-    },
+    client: "pg",
+    connection: "postgres://localhost/partyplanner-test",
     useNullAsDefault: true,
     migrations: {
       directory: "./data/migrations"
