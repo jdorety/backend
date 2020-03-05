@@ -26,7 +26,8 @@ router.get("/:id/parties", async (req, res) => {
     } else {
       res.status(404).json({ err: "No parties associated with user" });
     }
-  } catch {
+  } catch (err) {
+    console.log(err);
     res.status(500).json(genericError);
   }
 });
