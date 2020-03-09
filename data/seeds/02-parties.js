@@ -8,7 +8,7 @@ exports.seed = function(knex, Promise) {
         {
           user_id: 1,
           numberGuest: 32,
-          when: "09/17/2019",
+          when: new Date(),
           theme: "Harvest",
           budget: 45
         },
@@ -22,7 +22,7 @@ exports.seed = function(knex, Promise) {
         {
           user_id: 2,
           numberGuest: 54,
-          when: "05/27/2019",
+          when: new Date(),
           theme: "Birthday",
           budget: 200
         },

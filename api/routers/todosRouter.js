@@ -51,7 +51,8 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const deleted = await todos.delete(id);
+    const deleted = await todos.remove(id);
+    console.log(deleted);
     if (deleted) {
       res.status(204).json({ message: "Entry deleted" });
     } else {

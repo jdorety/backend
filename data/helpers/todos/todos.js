@@ -7,6 +7,11 @@ module.exports = {
   remove
 };
 //add todo item to todos table using object containing party_id and item
+/**
+ * Add todo item to todos table.
+ * 
+ * @param {Object} item 
+ */
 function add(item) {
   return db("todos")
     .insert({ ...item })
